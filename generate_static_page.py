@@ -244,8 +244,13 @@ def main():
 
     html_content += generate_html_footer()
 
+    # Ensure docs directory exists
+    import os
+
+    os.makedirs("docs", exist_ok=True)
+
     # Write to file
-    output_file = "index.html"
+    output_file = "docs/index.html"
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(html_content)
 
