@@ -342,6 +342,7 @@ class IncomingDamage(FFLogsAPI):
             "ability_name",
             "unmitigatedAmount",
             "targetID",
+            "description",
             "damage_type",
             "damage_type_id",
         )
@@ -434,10 +435,17 @@ class IncomingDamage(FFLogsAPI):
                 "unmitigatedAmount": "Tank damage",
                 "ability_name": "Ability",
                 "targetID": "Target ID",
+                "description": "Description",
             },
             height=600,
             color=color_col,
             color_discrete_map=color_map,
+            hover_data=[
+                "ability_name",
+                "description",
+                "unmitigatedAmount",
+                "damage_type",
+            ],
             title=f"{fight_name} tank damage",
         ).update_layout(xaxis_tickformat="%M:%S")
 

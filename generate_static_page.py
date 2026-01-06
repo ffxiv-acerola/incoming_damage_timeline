@@ -13,17 +13,21 @@ FFLOGS_TOKEN = CONFIG["FFLOGS_TOKEN"]
 pl.config.Config.set_tbl_rows(80)
 
 logs = {
-    "M9N": {"report_id": "2ajHBbTkpRfFxMJg", "fight_id": 5, "party_damage": fights.M9N},
+    "M9N": {
+        "report_id": "HFK9wckdY1jCMZ27",
+        "fight_id": 41,
+        "party_damage": fights.M9N,
+    },
     "M10N": {
-        "report_id": "KLypxHcraTdRzY7F",
-        "fight_id": 3,
+        "report_id": "r6VFC3gRb4WzaDmw",
+        "fight_id": 65,
         "party_damage": fights.M10N,
     },
-    "M11N": {
-        "report_id": "vN4py2QhT91XKLHW",
-        "fight_id": 55,
-        "party_damage": fights.M11N,
-    },
+    # "M11N": {
+    #     "report_id": "vN4py2QhT91XKLHW",
+    #     "fight_id": 55,
+    #     "party_damage": fights.M11N,
+    # },
     # "M12N": {
     #     "report_id": "YCLr1Aj6FJ4yQXNH",
     #     "fight_id": 23,
