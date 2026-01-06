@@ -17,11 +17,13 @@ logs = {
         "report_id": "HFK9wckdY1jCMZ27",
         "fight_id": 41,
         "party_damage": fights.M9N,
+        "color_by_target": False,
     },
     "m10s": {
         "report_id": "r6VFC3gRb4WzaDmw",
         "fight_id": 65,
         "party_damage": fights.M10N,
+        "color_by_target": True,
     },
     # "M11N": {
     #     "report_id": "vN4py2QhT91XKLHW",
@@ -179,7 +181,7 @@ def generate_fight_section(fight_name: str, fight_data: dict) -> str:
     # Generate plots
     party_damage_fig = incoming_damage.plot_party_damage(fight_name)
     tank_damage_fig = incoming_damage.plot_tank_damage(
-        fight_name, color_by_target=False
+        fight_name, color_by_target=fight_data["color_by_target"]
     )
 
     # Generate HTML
