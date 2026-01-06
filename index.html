@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FFXIV Incoming Damage Timeline</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-3.3.0.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .fight-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            padding: 2rem;
+        }
+        .fight-title {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+        .table-container {
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+        table {
+            font-size: 0.9rem;
+        }
+        .table thead th {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            font-weight: 500;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(102, 126, 234, 0.05);
+        }
+        .plot-container {
+            margin-bottom: 2rem;
+        }
+        .section-subtitle {
+            color: #495057;
+            font-weight: 500;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        footer {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            text-align: center;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark mb-4">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">FFXIV Incoming Damage Timeline</span>
+        </div>
+    </nav>
+    <div class="container">
+
+    <div class="fight-section">
+        <h2 class="fight-title">Quick Navigation</h2>
+        <div class="list-group">
+            <a href="#m9n" class="list-group-item list-group-item-action">M9N</a>
+            <a href="#m10n" class="list-group-item list-group-item-action">M10N</a>
+            <a href="#m11n" class="list-group-item list-group-item-action">M11N</a>
+        </div>
+    </div>
+
+    <div class="fight-section" id="m9n">
+        <h2 class="fight-title">M9N</h2>
+
+        <h3 class="section-subtitle">Party Damage Timeline</h3>
+        <div class="table-container">
+            <table class="table table-striped table-hover" id="m9n_table">
+  <thead>
+    <tr>
+      <th>formatted_time</th>
+      <th>ability_name</th>
+      <th>unmitigatedAmount</th>
+      <th>description</th>
+      <th>damage_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>00:11.178</td>
+      <td>Killer Voice</td>
+      <td>104235</td>
+      <td>Raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>01:04.817</td>
+      <td>Sadistic Screech</td>
+      <td>105891</td>
+      <td>Raidwide / arena transition</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>01:29.724</td>
+      <td>Flaying Fry</td>
+      <td>66599</td>
+      <td>Puddle spread</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>01:49.177</td>
+      <td>Penetrating Pitch</td>
+      <td>80730</td>
+      <td>Light party stacks</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>01:49.244</td>
+      <td>Penetrating Pitch</td>
+      <td>79768</td>
+      <td>Light party stacks</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>02:26.634</td>
+      <td>Sadistic Screech</td>
+      <td>90940</td>
+      <td>Raidwide / arena transition</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>02:41.027</td>
+      <td>Crowd Kill</td>
+      <td>121757</td>
+      <td>Raidwide aether succ</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>02:59.988</td>
+      <td>Finale Fatale</td>
+      <td>124731</td>
+      <td>Raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>03:17.096</td>
+      <td>Aetherletting</td>
+      <td>94000</td>
+      <td>X/+ bait, 2x sets</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>03:32.302</td>
+      <td>Aetherletting</td>
+      <td>95862</td>
+      <td>X/+ bait, 2x sets</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>03:32.346</td>
+      <td>Aetherletting</td>
+      <td>96706</td>
+      <td>X/+ bait, 2x sets</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>03:39.747</td>
+      <td>Aetherletting</td>
+      <td>101955</td>
+      <td>X/+ bait, 2x sets</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>03:45.644</td>
+      <td>Brutal Rain</td>
+      <td>34924</td>
+      <td>Multi-hit party stack</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:12.745</td>
+      <td>Sadistic Screech</td>
+      <td>105199</td>
+      <td>Raidwide / arena transition</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:35.711</td>
+      <td>Killer Voice</td>
+      <td>104285</td>
+      <td>Raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:55.815</td>
+      <td>Killer Voice</td>
+      <td>106497</td>
+      <td>Raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>05:10.208</td>
+      <td>Sadistic Screech</td>
+      <td>110438</td>
+      <td>Raidwide / arena transition</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>05:24.598</td>
+      <td>Crowd Kill</td>
+      <td>126879</td>
+      <td>Raidwide aether succ</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:03.581</td>
+      <td>Finale Fatale</td>
+      <td>119425</td>
+      <td>Raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:40.923</td>
+      <td>Brutal Rain</td>
+      <td>34695</td>
+      <td>Multi-hit party stack</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:45.187</td>
+      <td>Brutal Rain</td>
+      <td>33434</td>
+      <td>Multi-hit party stack</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:55.904</td>
+      <td>Insatiable Thirst</td>
+      <td>104692</td>
+      <td>Raidwide / arena transition</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>07:14.165</td>
+      <td>Penetrating Pitch</td>
+      <td>68645</td>
+      <td>Light party stacks</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>07:14.209</td>
+      <td>Penetrating Pitch</td>
+      <td>117949</td>
+      <td>Light party stacks</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>07:24.843</td>
+      <td>Killer Voice</td>
+      <td>115165</td>
+      <td>Raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>07:38.721</td>
+      <td>Finale Fatale</td>
+      <td>116089</td>
+      <td>Raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>07:51.822</td>
+      <td>Aetherletting</td>
+      <td>101331</td>
+      <td>X/+ bait, 2x sets</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>08:07.025</td>
+      <td>Aetherletting</td>
+      <td>94823</td>
+      <td>X/+ bait, 2x sets</td>
+      <td>Magical</td>
+    </tr>
+  </tbody>
+</table>
+
+        </div>
+
+        <h3 class="section-subtitle">Party Damage Chart</h3>
+        <div class="plot-container" id="m9n_party_plot">
+            <div>                            <div id="m9n_party_div" class="plotly-graph-div" style="height:600px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("m9n_party_div")) {                    Plotly.newPlot(                        "m9n_party_div",                        [{"customdata":[["Killer Voice","Raidwide","Magical"],["Sadistic Screech","Raidwide \u002f arena transition","Magical"],["Flaying Fry","Puddle spread","Magical"],["Penetrating Pitch","Light party stacks","Magical"],["Penetrating Pitch","Light party stacks","Magical"],["Sadistic Screech","Raidwide \u002f arena transition","Magical"],["Crowd Kill","Raidwide aether succ","Magical"],["Finale Fatale","Raidwide","Magical"],["Aetherletting","X\u002f+ bait, 2x sets","Magical"],["Aetherletting","X\u002f+ bait, 2x sets","Magical"],["Aetherletting","X\u002f+ bait, 2x sets","Magical"],["Aetherletting","X\u002f+ bait, 2x sets","Magical"],["Brutal Rain","Multi-hit party stack","Magical"],["Sadistic Screech","Raidwide \u002f arena transition","Magical"],["Killer Voice","Raidwide","Magical"],["Killer Voice","Raidwide","Magical"],["Sadistic Screech","Raidwide \u002f arena transition","Magical"],["Crowd Kill","Raidwide aether succ","Magical"],["Finale Fatale","Raidwide","Magical"],["Brutal Rain","Multi-hit party stack","Magical"],["Brutal Rain","Multi-hit party stack","Magical"],["Insatiable Thirst","Raidwide \u002f arena transition","Magical"],["Penetrating Pitch","Light party stacks","Magical"],["Penetrating Pitch","Light party stacks","Magical"],["Killer Voice","Raidwide","Magical"],["Finale Fatale","Raidwide","Magical"],["Aetherletting","X\u002f+ bait, 2x sets","Magical"],["Aetherletting","X\u002f+ bait, 2x sets","Magical"]],"hovertemplate":"Damage Type=%{customdata[2]}\u003cbr\u003eFight duration=%{x}\u003cbr\u003eAvg. unmitigated damage (non-tank)=%{y}\u003cbr\u003eAbility=%{customdata[0]}\u003cbr\u003eDescription=%{customdata[1]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Magical","marker":{"color":"#636EFA","pattern":{"shape":""}},"name":"Magical","orientation":"v","showlegend":true,"text":["Killer Voice","Sadistic Screech","Flaying Fry","Penetrating Pitch","Penetrating Pitch","Sadistic Screech","Crowd Kill","Finale Fatale","Aetherletting","Aetherletting","Aetherletting","Aetherletting","Brutal Rain","Sadistic Screech","Killer Voice","Killer Voice","Sadistic Screech","Crowd Kill","Finale Fatale","Brutal Rain","Brutal Rain","Insatiable Thirst","Penetrating Pitch","Penetrating Pitch","Killer Voice","Finale Fatale","Aetherletting","Aetherletting"],"textposition":"auto","x":["2000-01-01T00:00:11.178000","2000-01-01T00:01:04.817000","2000-01-01T00:01:29.724000","2000-01-01T00:01:49.177500","2000-01-01T00:01:49.244000","2000-01-01T00:02:26.635000","2000-01-01T00:02:41.028000","2000-01-01T00:02:59.988500","2000-01-01T00:03:17.096000","2000-01-01T00:03:32.303000","2000-01-01T00:03:32.346000","2000-01-01T00:03:39.748000","2000-01-01T00:03:45.644000","2000-01-01T00:04:12.745000","2000-01-01T00:04:35.711000","2000-01-01T00:04:55.815500","2000-01-01T00:05:10.208499","2000-01-01T00:05:24.598000","2000-01-01T00:06:03.581000","2000-01-01T00:06:40.923000","2000-01-01T00:06:45.187000","2000-01-01T00:06:55.904000","2000-01-01T00:07:14.165000","2000-01-01T00:07:14.209500","2000-01-01T00:07:24.843000","2000-01-01T00:07:38.722000","2000-01-01T00:07:51.822000","2000-01-01T00:08:07.025000"],"xaxis":"x","y":{"dtype":"i4","bdata":"K5cBAKOdAQAnBAEAWjsBAJg3AQA8YwEAndsBADvnAQAwbwEAdnYBAMJ5AQBDjgEAbIgAAO+aAQBdlwEAAaABAGavAQCf7wEAgdIBAIeHAACaggAA9JgBACUMAQC9zAEA3cEBAHnFAQDTiwEAZ3IBAA=="},"yaxis":"y","type":"bar","width":3000}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Fight duration"},"tickformat":"%M:%S"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Avg. unmitigated damage (non-tank)"}},"legend":{"title":{"text":"Damage Type"},"tracegroupgap":0},"title":{"text":"M9N Party damage"},"barmode":"relative","height":600},                        {"responsive": true}                    )                };            </script>        </div>
+        </div>
+
+        <h3 class="section-subtitle">Tank Damage Chart</h3>
+        <div class="plot-container" id="m9n_tank_plot">
+            <div>                            <div id="m9n_tank_div" class="plotly-graph-div" style="height:600px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("m9n_tank_div")) {                    Plotly.newPlot(                        "m9n_tank_div",                        [{"hovertemplate":"Damage Type=Physical\u003cbr\u003etime=%{x}\u003cbr\u003eTank damage=%{y}\u003cbr\u003eAbility=%{text}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Physical","marker":{"color":"#FFA15A","pattern":{"shape":""}},"name":"Physical","orientation":"v","showlegend":true,"text":["Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack"],"textposition":"auto","x":["2000-01-01T00:00:03.826000","2000-01-01T00:00:14.924000","2000-01-01T00:00:26.684000","2000-01-01T00:00:36.887000","2000-01-01T00:00:39.917000","2000-01-01T00:00:42.948000","2000-01-01T00:00:53.015000","2000-01-01T00:01:06.373999","2000-01-01T00:02:30.558000","2000-01-01T00:02:46.954000","2000-01-01T00:02:49.984000","2000-01-01T00:03:02.331000","2000-01-01T00:03:05.365000","2000-01-01T00:03:08.399000","2000-01-01T00:03:20.533000","2000-01-01T00:03:24.587000","2000-01-01T00:03:35.690000","2000-01-01T00:03:38.723000","2000-01-01T00:04:01.966000","2000-01-01T00:05:11.882000","2000-01-01T00:05:14.918000","2000-01-01T00:05:27.582000","2000-01-01T00:05:51.585000","2000-01-01T00:06:16.164000","2000-01-01T00:06:19.193000","2000-01-01T00:06:59.286000","2000-01-01T00:07:25.600000","2000-01-01T00:07:28.626000","2000-01-01T00:07:41.077000","2000-01-01T00:07:44.104000","2000-01-01T00:07:54.228000","2000-01-01T00:07:57.259000","2000-01-01T00:08:10.408000"],"xaxis":"x","y":{"dtype":"i4","bdata":"1IwAAJ5sAAAnjgAASYcAAPCFAACsgwAA9ogAABiFAADRjgAA9pYAAEGWAADGigAA844AAGuQAACclQAA9JAAAP+VAAAmlgAAO4cAAMGRAABhkQAAApEAAOaWAAC2fwAAQpQAALyPAACUkgAACUwAANyXAADLmwAAF5YAAKWZAAACmwAA"},"yaxis":"y","type":"bar","width":2000},{"hovertemplate":"Damage Type=Magical\u003cbr\u003etime=%{x}\u003cbr\u003eTank damage=%{y}\u003cbr\u003eAbility=%{text}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Magical","marker":{"color":"#636EFA","pattern":{"shape":""}},"name":"Magical","orientation":"v","showlegend":true,"text":["Hardcore","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Hardcore","Hardcore","Hardcore","Hardcore"],"textposition":"auto","x":["2000-01-01T00:00:50.654000","2000-01-01T00:02:13.449000","2000-01-01T00:02:16.480000","2000-01-01T00:02:19.509000","2000-01-01T00:02:27.569000","2000-01-01T00:04:14.326000","2000-01-01T00:04:17.353000","2000-01-01T00:04:20.382000","2000-01-01T00:04:23.409000","2000-01-01T00:04:26.442000","2000-01-01T00:04:29.476000","2000-01-01T00:04:38.561000","2000-01-01T00:04:41.587000","2000-01-01T00:04:44.622000","2000-01-01T00:04:47.654000","2000-01-01T00:04:57.780000","2000-01-01T00:05:00.814000","2000-01-01T00:05:03.852000","2000-01-01T00:05:49.173000","2000-01-01T00:05:49.173000","2000-01-01T00:07:05.016000","2000-01-01T00:07:05.017000"],"xaxis":"x","y":{"dtype":"i4","bdata":"XqcCAAKHAADAiwAA+4cAAJMPAQBSjQAA2JEAAPiQAAB7lQAAuIgAAMuLAAC\u002fkwAAMJMAADCUAAC4jQAA0YoAAIyRAAB3jQAA7dYCAH4NAwCx2gIAkHADAA=="},"yaxis":"y","type":"bar","width":2000}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"time"},"tickformat":"%M:%S"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Tank damage"}},"legend":{"title":{"text":"Damage Type"},"tracegroupgap":0},"title":{"text":"M9N tank damage"},"barmode":"relative","height":600},                        {"responsive": true}                    )                };            </script>        </div>
+        </div>
+    </div>
+
+    <div class="fight-section" id="m10n">
+        <h2 class="fight-title">M10N</h2>
+
+        <h3 class="section-subtitle">Party Damage Timeline</h3>
+        <div class="table-container">
+            <table class="table table-striped table-hover" id="m10n_table">
+  <thead>
+    <tr>
+      <th>formatted_time</th>
+      <th>ability_name</th>
+      <th>unmitigatedAmount</th>
+      <th>description</th>
+      <th>damage_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>00:25.745</td>
+      <td>Alley-Oop Inferno</td>
+      <td>75199</td>
+      <td>Spread puddles</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>00:38.619</td>
+      <td>Cutback Blaze</td>
+      <td>67874</td>
+      <td>Targeted fire cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>00:47.196</td>
+      <td>Divers' Dare</td>
+      <td>53764</td>
+      <td>Raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>00:57.560</td>
+      <td>Cutback Blaze</td>
+      <td>61814</td>
+      <td>Targeted fire cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>01:03.798</td>
+      <td>Alley-Oop Inferno</td>
+      <td>74226</td>
+      <td>Spread puddles</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>01:13.574</td>
+      <td>Divers' Dare</td>
+      <td>53219</td>
+      <td>Raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>01:58.003</td>
+      <td>Deep Varial</td>
+      <td>106929</td>
+      <td>Edge conal</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>02:10.453</td>
+      <td>Deep Varial</td>
+      <td>108807</td>
+      <td>Edge conal</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>02:44.623</td>
+      <td>Xtreme Spectacular</td>
+      <td>22113</td>
+      <td>Multi hit ult</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>02:45.515</td>
+      <td>Xtreme Spectacular</td>
+      <td>15473</td>
+      <td>Proximity ult</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>02:46.628</td>
+      <td>Xtreme Spectacular</td>
+      <td>15205</td>
+      <td>Proximity ult</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>02:47.476</td>
+      <td>Xtreme Spectacular</td>
+      <td>15642</td>
+      <td>Proximity ult</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>02:48.014</td>
+      <td>Xtreme Spectacular</td>
+      <td>15628</td>
+      <td>Proximity ult</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>02:48.547</td>
+      <td>Xtreme Spectacular</td>
+      <td>15983</td>
+      <td>Proximity ult</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>02:48.950</td>
+      <td>Xtreme Spectacular</td>
+      <td>15488</td>
+      <td>Proximity ult</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>02:49.349</td>
+      <td>Xtreme Spectacular</td>
+      <td>44259</td>
+      <td>Multi hit ult</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>03:06.595</td>
+      <td>Hot Aerial</td>
+      <td>15329</td>
+      <td>Tower soak damage</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>03:08.617</td>
+      <td>Hot Aerial</td>
+      <td>16221</td>
+      <td>Tower soak damage</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>03:12.649</td>
+      <td>Hot Aerial</td>
+      <td>15852</td>
+      <td>Tower soak damage</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>03:27.066</td>
+      <td>Sick Swell</td>
+      <td>15991</td>
+      <td>Deep blue pushy wave</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>03:40.413</td>
+      <td>Pyrotation</td>
+      <td>112506</td>
+      <td>Party stack fire puddle drop</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>03:59.198</td>
+      <td>Divers' Dare</td>
+      <td>54060</td>
+      <td>Raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:16.814</td>
+      <td>Watersnaking</td>
+      <td>106886</td>
+      <td>Firewall type raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:16.814</td>
+      <td>Firesnaking</td>
+      <td>108661</td>
+      <td>Firewall type raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:30.449</td>
+      <td>Plunging Snap</td>
+      <td>62362</td>
+      <td>Baited fire cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:30.449</td>
+      <td>Blasting Snap</td>
+      <td>67566</td>
+      <td>Baited water cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:30.449</td>
+      <td>Plunging Snap</td>
+      <td>60892</td>
+      <td>Baited fire cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:37.795</td>
+      <td>Plunging Snap</td>
+      <td>60187</td>
+      <td>Baited fire cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:37.795</td>
+      <td>Blasting Snap</td>
+      <td>61709</td>
+      <td>Baited water cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:37.795</td>
+      <td>Blasting Snap</td>
+      <td>58833</td>
+      <td>Baited water cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:45.144</td>
+      <td>Blasting Snap</td>
+      <td>67138</td>
+      <td>Baited water cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:45.144</td>
+      <td>Plunging Snap</td>
+      <td>58518</td>
+      <td>Baited fire cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:45.167</td>
+      <td>Plunging Snap</td>
+      <td>60906</td>
+      <td>Baited fire cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:52.494</td>
+      <td>Plunging Snap</td>
+      <td>62635</td>
+      <td>Baited fire cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:52.494</td>
+      <td>Blasting Snap</td>
+      <td>67612</td>
+      <td>Baited water cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>04:52.515</td>
+      <td>Blasting Snap</td>
+      <td>63396</td>
+      <td>Baited water cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>05:01.470</td>
+      <td>Divers' Dare</td>
+      <td>53790</td>
+      <td>Raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>05:20.315</td>
+      <td>Deep Varial</td>
+      <td>114197</td>
+      <td>Edge conal</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>05:31.920</td>
+      <td>Cutback Blaze</td>
+      <td>66329</td>
+      <td>Targeted fire cone</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>05:58.930</td>
+      <td>Alley-Oop Inferno</td>
+      <td>72861</td>
+      <td>Spread puddles</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:07.683</td>
+      <td>Divers' Dare</td>
+      <td>52658</td>
+      <td>Raidwide</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:44.161</td>
+      <td>Sick Swell</td>
+      <td>15630</td>
+      <td>Deep blue pushy wave</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:54.502</td>
+      <td>Pyrotation</td>
+      <td>100224</td>
+      <td>Party stack fire puddle drop</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>07:13.372</td>
+      <td>Divers' Dare</td>
+      <td>55276</td>
+      <td>Raidwide</td>
+      <td>Magical</td>
+    </tr>
+  </tbody>
+</table>
+
+        </div>
+
+        <h3 class="section-subtitle">Party Damage Chart</h3>
+        <div class="plot-container" id="m10n_party_plot">
+            <div>                            <div id="m10n_party_div" class="plotly-graph-div" style="height:600px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("m10n_party_div")) {                    Plotly.newPlot(                        "m10n_party_div",                        [{"customdata":[["Alley-Oop Inferno","Spread puddles","Magical"],["Cutback Blaze","Targeted fire cone","Magical"],["Divers' Dare","Raidwide","Magical"],["Cutback Blaze","Targeted fire cone","Magical"],["Alley-Oop Inferno","Spread puddles","Magical"],["Divers' Dare","Raidwide","Magical"],["Deep Varial","Edge conal","Magical"],["Deep Varial","Edge conal","Magical"],["Xtreme Spectacular","Multi hit ult","Magical"],["Xtreme Spectacular","Proximity ult","Magical"],["Xtreme Spectacular","Proximity ult","Magical"],["Xtreme Spectacular","Proximity ult","Magical"],["Xtreme Spectacular","Proximity ult","Magical"],["Xtreme Spectacular","Proximity ult","Magical"],["Xtreme Spectacular","Proximity ult","Magical"],["Xtreme Spectacular","Multi hit ult","Magical"],["Hot Aerial","Tower soak damage","Magical"],["Hot Aerial","Tower soak damage","Magical"],["Hot Aerial","Tower soak damage","Magical"],["Sick Swell","Deep blue pushy wave","Magical"],["Pyrotation","Party stack fire puddle drop","Magical"],["Divers' Dare","Raidwide","Magical"],["Watersnaking","Firewall type raidwide","Magical"],["Firesnaking","Firewall type raidwide","Magical"],["Plunging Snap","Baited fire cone","Magical"],["Blasting Snap","Baited water cone","Magical"],["Plunging Snap","Baited fire cone","Magical"],["Blasting Snap","Baited water cone","Magical"],["Blasting Snap","Baited water cone","Magical"],["Plunging Snap","Baited fire cone","Magical"],["Plunging Snap","Baited fire cone","Magical"],["Blasting Snap","Baited water cone","Magical"],["Plunging Snap","Baited fire cone","Magical"],["Plunging Snap","Baited fire cone","Magical"],["Blasting Snap","Baited water cone","Magical"],["Blasting Snap","Baited water cone","Magical"],["Divers' Dare","Raidwide","Magical"],["Deep Varial","Edge conal","Magical"],["Cutback Blaze","Targeted fire cone","Magical"],["Alley-Oop Inferno","Spread puddles","Magical"],["Divers' Dare","Raidwide","Magical"],["Sick Swell","Deep blue pushy wave","Magical"],["Pyrotation","Party stack fire puddle drop","Magical"],["Divers' Dare","Raidwide","Magical"]],"hovertemplate":"Damage Type=%{customdata[2]}\u003cbr\u003eFight duration=%{x}\u003cbr\u003eAvg. unmitigated damage (non-tank)=%{y}\u003cbr\u003eAbility=%{customdata[0]}\u003cbr\u003eDescription=%{customdata[1]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Magical","marker":{"color":"#636EFA","pattern":{"shape":""}},"name":"Magical","orientation":"v","showlegend":true,"text":["Alley-Oop Inferno","Cutback Blaze","Divers' Dare","Cutback Blaze","Alley-Oop Inferno","Divers' Dare","Deep Varial","Deep Varial","Xtreme Spectacular","Xtreme Spectacular","Xtreme Spectacular","Xtreme Spectacular","Xtreme Spectacular","Xtreme Spectacular","Xtreme Spectacular","Xtreme Spectacular","Hot Aerial","Hot Aerial","Hot Aerial","Sick Swell","Pyrotation","Divers' Dare","Watersnaking","Firesnaking","Plunging Snap","Blasting Snap","Plunging Snap","Blasting Snap","Blasting Snap","Plunging Snap","Plunging Snap","Blasting Snap","Plunging Snap","Plunging Snap","Blasting Snap","Blasting Snap","Divers' Dare","Deep Varial","Cutback Blaze","Alley-Oop Inferno","Divers' Dare","Sick Swell","Pyrotation","Divers' Dare"],"textposition":"auto","x":["2000-01-01T00:00:25.745000","2000-01-01T00:00:38.619000","2000-01-01T00:00:47.196000","2000-01-01T00:00:57.560000","2000-01-01T00:01:03.798000","2000-01-01T00:01:13.574000","2000-01-01T00:01:58.003500","2000-01-01T00:02:10.453000","2000-01-01T00:02:44.624000","2000-01-01T00:02:45.515000","2000-01-01T00:02:46.629000","2000-01-01T00:02:47.476000","2000-01-01T00:02:48.014000","2000-01-01T00:02:48.547000","2000-01-01T00:02:48.950000","2000-01-01T00:02:49.350000","2000-01-01T00:03:06.595000","2000-01-01T00:03:08.617000","2000-01-01T00:03:12.649000","2000-01-01T00:03:27.066500","2000-01-01T00:03:40.413000","2000-01-01T00:03:59.198500","2000-01-01T00:04:16.814000","2000-01-01T00:04:16.814000","2000-01-01T00:04:30.450000","2000-01-01T00:04:30.450000","2000-01-01T00:04:30.450000","2000-01-01T00:04:37.796000","2000-01-01T00:04:37.796000","2000-01-01T00:04:37.796000","2000-01-01T00:04:45.145000","2000-01-01T00:04:45.145000","2000-01-01T00:04:45.167000","2000-01-01T00:04:52.494000","2000-01-01T00:04:52.494000","2000-01-01T00:04:52.515500","2000-01-01T00:05:01.470500","2000-01-01T00:05:20.315500","2000-01-01T00:05:31.921000","2000-01-01T00:05:58.930000","2000-01-01T00:06:07.683500","2000-01-01T00:06:44.161500","2000-01-01T00:06:54.502000","2000-01-01T00:07:13.372500"],"xaxis":"x","y":{"dtype":"i4","bdata":"vyUBACIJAQAE0gAAdvEAAPIhAQDjzwAAsaEBAAepAQBhVgAAcTwAAGU7AAAaPQAADD0AAG8+AACAPAAA46wAAOE7AABdPwAA7D0AAHc+AAB6twEALNMAAIahAQB1qAEAmvMAAO4HAQDc7QAA0eUAAA3xAAAb6wAAluQAAEIGAQDq7QAAq\u002fQAABwIAQCk9wAAHtIAABW+AQAZAwEAnRwBALLNAAAOPQAAgIcBAOzXAAA="},"yaxis":"y","type":"bar","width":3000}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Fight duration"},"tickformat":"%M:%S"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Avg. unmitigated damage (non-tank)"}},"legend":{"title":{"text":"Damage Type"},"tracegroupgap":0},"title":{"text":"M10N Party damage"},"barmode":"relative","height":600},                        {"responsive": true}                    )                };            </script>        </div>
+        </div>
+
+        <h3 class="section-subtitle">Tank Damage Chart</h3>
+        <div class="plot-container" id="m10n_tank_plot">
+            <div>                            <div id="m10n_tank_div" class="plotly-graph-div" style="height:600px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("m10n_tank_div")) {                    Plotly.newPlot(                        "m10n_tank_div",                        [{"hovertemplate":"Damage Type=Physical\u003cbr\u003etime=%{x}\u003cbr\u003eTank damage=%{y}\u003cbr\u003eAbility=%{text}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Physical","marker":{"color":"#FFA15A","pattern":{"shape":""}},"name":"Physical","orientation":"v","showlegend":true,"text":["Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Deep Impact","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack"],"textposition":"auto","x":["2000-01-01T00:00:03.828000","2000-01-01T00:00:06.856000","2000-01-01T00:00:09.888000","2000-01-01T00:00:28.330000","2000-01-01T00:00:31.360000","2000-01-01T00:00:40.758000","2000-01-01T00:00:48.827000","2000-01-01T00:00:51.852000","2000-01-01T00:01:05.581000","2000-01-01T00:01:13.642000","2000-01-01T00:01:16.671000","2000-01-01T00:01:21.841000","2000-01-01T00:01:24.868000","2000-01-01T00:01:30.930000","2000-01-01T00:01:48.353000","2000-01-01T00:02:01.099000","2000-01-01T00:02:13.662000","2000-01-01T00:02:19.550000","2000-01-01T00:02:21.729000","2000-01-01T00:02:24.762000","2000-01-01T00:02:54.699000","2000-01-01T00:02:55.724000","2000-01-01T00:02:57.728000","2000-01-01T00:03:01.114000","2000-01-01T00:03:04.142000","2000-01-01T00:03:07.175000","2000-01-01T00:03:22.360000","2000-01-01T00:03:25.392000","2000-01-01T00:03:28.427000","2000-01-01T00:03:29.630000","2000-01-01T00:03:31.457000","2000-01-01T00:03:32.659000","2000-01-01T00:03:34.486000","2000-01-01T00:03:35.690000","2000-01-01T00:03:38.720000","2000-01-01T00:03:41.750000","2000-01-01T00:03:42.864000","2000-01-01T00:03:45.893000","2000-01-01T00:03:48.923000","2000-01-01T00:03:51.956000","2000-01-01T00:03:52.089000","2000-01-01T00:04:00.022000","2000-01-01T00:04:00.156000","2000-01-01T00:04:03.048000","2000-01-01T00:04:03.181000","2000-01-01T00:04:06.075000","2000-01-01T00:04:06.210000","2000-01-01T00:04:55.347000","2000-01-01T00:04:56.370000","2000-01-01T00:05:03.409000","2000-01-01T00:05:04.435000","2000-01-01T00:05:06.443000","2000-01-01T00:05:07.471000","2000-01-01T00:05:09.472000","2000-01-01T00:05:12.500000","2000-01-01T00:05:15.526000","2000-01-01T00:05:18.557000","2000-01-01T00:05:21.587000","2000-01-01T00:05:22.520000","2000-01-01T00:05:24.614000","2000-01-01T00:05:25.552000","2000-01-01T00:05:28.579000","2000-01-01T00:05:31.610000","2000-01-01T00:05:31.965000","2000-01-01T00:05:34.641000","2000-01-01T00:05:34.996000","2000-01-01T00:05:38.023000","2000-01-01T00:05:41.050000","2000-01-01T00:05:44.051000","2000-01-01T00:05:44.051000","2000-01-01T00:05:47.080000","2000-01-01T00:05:50.109000","2000-01-01T00:05:53.134000","2000-01-01T00:05:59.197000","2000-01-01T00:06:00.845000","2000-01-01T00:06:02.226000","2000-01-01T00:06:08.908000","2000-01-01T00:06:10.288000","2000-01-01T00:06:11.936000","2000-01-01T00:06:13.320000","2000-01-01T00:06:14.968000","2000-01-01T00:06:18.132000","2000-01-01T00:06:19.156000","2000-01-01T00:06:22.189000","2000-01-01T00:06:25.219000","2000-01-01T00:06:38.280000","2000-01-01T00:06:42.337000","2000-01-01T00:06:45.366000","2000-01-01T00:06:47.773000","2000-01-01T00:06:48.399000","2000-01-01T00:06:50.806000","2000-01-01T00:06:53.832000","2000-01-01T00:06:56.776000","2000-01-01T00:06:59.808000","2000-01-01T00:07:02.837000","2000-01-01T00:07:05.870000","2000-01-01T00:07:06.225000","2000-01-01T00:07:14.285000","2000-01-01T00:07:15.979000","2000-01-01T00:07:17.314000","2000-01-01T00:07:19.006000","2000-01-01T00:07:20.341000","2000-01-01T00:07:23.726000"],"xaxis":"x","y":{"dtype":"i4","bdata":"l30AAAyBAAAPgQAA43kAACKAAADfgQAAfHwAAFF6AACYgQAAXH0AAMZ1AAAugQAA0nkAAFN5AABUcwAACJoAAESVAAAVAgMAaI4AACCTAAAnkwAAg4QAABGXAADndgAAc3gAAK6AAAA1lwAAGoUAALKGAACgfwAAHIIAAER5AABSfwAA4n4AABJ9AABFewAADoQAAIuEAAA7gwAAqX4AAP96AABpggAAFn4AADR+AACLeAAAXIIAABt6AADzewAAf3gAAGF\u002fAAAcfwAAW4MAALaAAABtfgAAEXwAAAKIAAANhAAA6n8AAI18AACBfwAA43YAAPJ+AAAJewAAcocAAEx\u002fAAA6fgAAtIgAAEl8AACJfAAAjngAANx+AADreQAAUn8AACxtAAAufAAA\u002fXwAAC2AAAA2eAAAyoAAAHN6AACrhwAAxoQAANCBAAAudwAAc38AAGKHAAD7fAAAI4MAAHOBAAD+gAAAxYAAANt6AAAzhAAAtH0AAIuGAADuewAA\u002fnoAAKh7AAAohwAAgXYAAB6IAAA\u002feAAACHcAAA=="},"yaxis":"y","type":"bar","width":2000}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"time"},"tickformat":"%M:%S"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Tank damage"}},"legend":{"title":{"text":"Damage Type"},"tracegroupgap":0},"title":{"text":"M10N tank damage"},"barmode":"relative","height":600},                        {"responsive": true}                    )                };            </script>        </div>
+        </div>
+    </div>
+
+    <div class="fight-section" id="m11n">
+        <h2 class="fight-title">M11N</h2>
+
+        <h3 class="section-subtitle">Party Damage Timeline</h3>
+        <div class="table-container">
+            <table class="table table-striped table-hover" id="m11n_table">
+  <thead>
+    <tr>
+      <th>formatted_time</th>
+      <th>ability_name</th>
+      <th>unmitigatedAmount</th>
+      <th>description</th>
+      <th>damage_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>00:11.535</td>
+      <td>Crown of Arcadia</td>
+      <td>104289</td>
+      <td>Raidwide</td>
+      <td>Physical</td>
+    </tr>
+    <tr>
+      <td>01:00.477</td>
+      <td>Comet</td>
+      <td>38888</td>
+      <td>Spread puddle</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>01:02.569</td>
+      <td>Comet</td>
+      <td>40509</td>
+      <td>Spread puddle</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>01:04.617</td>
+      <td>Comet</td>
+      <td>40000</td>
+      <td>Spread puddle</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>02:36.985</td>
+      <td>Dance of Domination</td>
+      <td>24281</td>
+      <td>Multi hit slashy slash</td>
+      <td>Physical</td>
+    </tr>
+    <tr>
+      <td>02:37.563</td>
+      <td>Dance of Domination</td>
+      <td>11034</td>
+      <td>Multi hit slashy slash</td>
+      <td>Physical</td>
+    </tr>
+    <tr>
+      <td>02:38.144</td>
+      <td>Dance of Domination</td>
+      <td>12066</td>
+      <td>Multi hit slashy slash</td>
+      <td>Physical</td>
+    </tr>
+    <tr>
+      <td>02:39.300</td>
+      <td>Dance of Domination</td>
+      <td>73348</td>
+      <td>Multi hit slashy slash</td>
+      <td>Physical</td>
+    </tr>
+    <tr>
+      <td>02:45.492</td>
+      <td>Explosion</td>
+      <td>112519</td>
+      <td>Knockup</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>03:01.132</td>
+      <td>Impact</td>
+      <td>97813</td>
+      <td>Spread puddle</td>
+      <td>Physical</td>
+    </tr>
+    <tr>
+      <td>04:11.199</td>
+      <td>One and Only</td>
+      <td>108152</td>
+      <td>Raidwide ult</td>
+      <td>Physical</td>
+    </tr>
+    <tr>
+      <td>04:31.908</td>
+      <td>Cosmic Kiss</td>
+      <td>13502</td>
+      <td>Meteor tower</td>
+      <td>Physical</td>
+    </tr>
+    <tr>
+      <td>04:31.951</td>
+      <td>Cosmic Kiss</td>
+      <td>14563</td>
+      <td>Meteor tower</td>
+      <td>Physical</td>
+    </tr>
+    <tr>
+      <td>05:33.554</td>
+      <td>Flatliner</td>
+      <td>103820</td>
+      <td>Knockup</td>
+      <td>Physical</td>
+    </tr>
+    <tr>
+      <td>06:00.162</td>
+      <td>Mammoth Meteor</td>
+      <td>97946</td>
+      <td>Proximity damage</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:00.229</td>
+      <td>Mammoth Meteor</td>
+      <td>22540</td>
+      <td>Proximity damage</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:11.656</td>
+      <td>Explosion</td>
+      <td>22132</td>
+      <td>Knockup</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:11.701</td>
+      <td>Explosion</td>
+      <td>22290</td>
+      <td>Knockup</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:11.745</td>
+      <td>Explosion</td>
+      <td>24238</td>
+      <td>Knockup</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:31.567</td>
+      <td>Mammoth Meteor</td>
+      <td>22326</td>
+      <td>Proximity damage</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:31.612</td>
+      <td>Mammoth Meteor</td>
+      <td>21976</td>
+      <td>Proximity damage</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>06:42.185</td>
+      <td>Explosion</td>
+      <td>20854</td>
+      <td>Knockup</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>07:07.426</td>
+      <td>Crown of Arcadia</td>
+      <td>99983</td>
+      <td>Raidwide</td>
+      <td>Physical</td>
+    </tr>
+    <tr>
+      <td>07:28.168</td>
+      <td>Heartbreak Kick</td>
+      <td>158930</td>
+      <td>Multi hit tower</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>07:41.409</td>
+      <td>Heartbreak Kick</td>
+      <td>51780</td>
+      <td>Multi hit tower</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>07:43.412</td>
+      <td>Heartbreak Kick</td>
+      <td>54566</td>
+      <td>Multi hit tower</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>07:45.415</td>
+      <td>Heartbreak Kick</td>
+      <td>54333</td>
+      <td>Multi hit tower</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>07:47.420</td>
+      <td>Heartbreak Kick</td>
+      <td>53338</td>
+      <td>Multi hit tower</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>08:21.713</td>
+      <td>Mammoth Meteor</td>
+      <td>22175</td>
+      <td>Proximity damage</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>08:21.735</td>
+      <td>Mammoth Meteor</td>
+      <td>21931</td>
+      <td>Proximity damage</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>08:40.673</td>
+      <td>Comet</td>
+      <td>40664</td>
+      <td>Spread puddle</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>08:42.769</td>
+      <td>Comet</td>
+      <td>38727</td>
+      <td>Spread puddle</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>08:44.820</td>
+      <td>Comet</td>
+      <td>38573</td>
+      <td>Spread puddle</td>
+      <td>Magical</td>
+    </tr>
+    <tr>
+      <td>08:44.822</td>
+      <td>Comet</td>
+      <td>38017</td>
+      <td>Spread puddle</td>
+      <td>Magical</td>
+    </tr>
+  </tbody>
+</table>
+
+        </div>
+
+        <h3 class="section-subtitle">Party Damage Chart</h3>
+        <div class="plot-container" id="m11n_party_plot">
+            <div>                            <div id="m11n_party_div" class="plotly-graph-div" style="height:600px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("m11n_party_div")) {                    Plotly.newPlot(                        "m11n_party_div",                        [{"customdata":[["Crown of Arcadia","Raidwide","Physical"],["Dance of Domination","Multi hit slashy slash","Physical"],["Dance of Domination","Multi hit slashy slash","Physical"],["Dance of Domination","Multi hit slashy slash","Physical"],["Dance of Domination","Multi hit slashy slash","Physical"],["Impact","Spread puddle","Physical"],["One and Only","Raidwide ult","Physical"],["Cosmic Kiss","Meteor tower","Physical"],["Cosmic Kiss","Meteor tower","Physical"],["Flatliner","Knockup","Physical"],["Crown of Arcadia","Raidwide","Physical"]],"hovertemplate":"Damage Type=%{customdata[2]}\u003cbr\u003eFight duration=%{x}\u003cbr\u003eAvg. unmitigated damage (non-tank)=%{y}\u003cbr\u003eAbility=%{customdata[0]}\u003cbr\u003eDescription=%{customdata[1]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Physical","marker":{"color":"#FFA15A","pattern":{"shape":""}},"name":"Physical","orientation":"v","showlegend":true,"text":["Crown of Arcadia","Dance of Domination","Dance of Domination","Dance of Domination","Dance of Domination","Impact","One and Only","Cosmic Kiss","Cosmic Kiss","Flatliner","Crown of Arcadia"],"textposition":"auto","x":["2000-01-01T00:00:11.535000","2000-01-01T00:02:36.986000","2000-01-01T00:02:37.563000","2000-01-01T00:02:38.144000","2000-01-01T00:02:39.300000","2000-01-01T00:03:01.132000","2000-01-01T00:04:11.199000","2000-01-01T00:04:31.908000","2000-01-01T00:04:31.951000","2000-01-01T00:05:33.554000","2000-01-01T00:07:07.426000"],"xaxis":"x","y":{"dtype":"i4","bdata":"YZcBANleAAAaKwAAIi8AAIQeAQAVfgEAeKYBAL40AADjOAAAjJUBAI+GAQA="},"yaxis":"y","type":"bar","width":3000},{"customdata":[["Comet","Spread puddle","Magical"],["Comet","Spread puddle","Magical"],["Comet","Spread puddle","Magical"],["Explosion","Knockup","Magical"],["Mammoth Meteor","Proximity damage","Magical"],["Mammoth Meteor","Proximity damage","Magical"],["Explosion","Knockup","Magical"],["Explosion","Knockup","Magical"],["Explosion","Knockup","Magical"],["Mammoth Meteor","Proximity damage","Magical"],["Mammoth Meteor","Proximity damage","Magical"],["Explosion","Knockup","Magical"],["Heartbreak Kick","Multi hit tower","Magical"],["Heartbreak Kick","Multi hit tower","Magical"],["Heartbreak Kick","Multi hit tower","Magical"],["Heartbreak Kick","Multi hit tower","Magical"],["Heartbreak Kick","Multi hit tower","Magical"],["Mammoth Meteor","Proximity damage","Magical"],["Mammoth Meteor","Proximity damage","Magical"],["Comet","Spread puddle","Magical"],["Comet","Spread puddle","Magical"],["Comet","Spread puddle","Magical"],["Comet","Spread puddle","Magical"]],"hovertemplate":"Damage Type=%{customdata[2]}\u003cbr\u003eFight duration=%{x}\u003cbr\u003eAvg. unmitigated damage (non-tank)=%{y}\u003cbr\u003eAbility=%{customdata[0]}\u003cbr\u003eDescription=%{customdata[1]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Magical","marker":{"color":"#636EFA","pattern":{"shape":""}},"name":"Magical","orientation":"v","showlegend":true,"text":["Comet","Comet","Comet","Explosion","Mammoth Meteor","Mammoth Meteor","Explosion","Explosion","Explosion","Mammoth Meteor","Mammoth Meteor","Explosion","Heartbreak Kick","Heartbreak Kick","Heartbreak Kick","Heartbreak Kick","Heartbreak Kick","Mammoth Meteor","Mammoth Meteor","Comet","Comet","Comet","Comet"],"textposition":"auto","x":["2000-01-01T00:01:00.477000","2000-01-01T00:01:02.569000","2000-01-01T00:01:04.617000","2000-01-01T00:02:45.493000","2000-01-01T00:06:00.162500","2000-01-01T00:06:00.229500","2000-01-01T00:06:11.657000","2000-01-01T00:06:11.701000","2000-01-01T00:06:11.746000","2000-01-01T00:06:31.567000","2000-01-01T00:06:31.612000","2000-01-01T00:06:42.185000","2000-01-01T00:07:28.169000","2000-01-01T00:07:41.409500","2000-01-01T00:07:43.412500","2000-01-01T00:07:45.415000","2000-01-01T00:07:47.420000","2000-01-01T00:08:21.713000","2000-01-01T00:08:21.735500","2000-01-01T00:08:40.674000","2000-01-01T00:08:42.769000","2000-01-01T00:08:44.820000","2000-01-01T00:08:44.822000"],"xaxis":"x","y":{"dtype":"i4","bdata":"6JcAAD2eAABAnAAAh7cBAJp+AQAMWAAAdFYAABJXAACuXgAANlcAANhVAAB2UQAA0mwCAETKAAAm1QAAPdQAAFrQAACfVgAAq1UAANieAABHlwAArZYAAIGUAAA="},"yaxis":"y","type":"bar","width":3000}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Fight duration"},"tickformat":"%M:%S"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Avg. unmitigated damage (non-tank)"}},"legend":{"title":{"text":"Damage Type"},"tracegroupgap":0},"title":{"text":"M11N Party damage"},"barmode":"relative","height":600},                        {"responsive": true}                    )                };            </script>        </div>
+        </div>
+
+        <h3 class="section-subtitle">Tank Damage Chart</h3>
+        <div class="plot-container" id="m11n_tank_plot">
+            <div>                            <div id="m11n_tank_div" class="plotly-graph-div" style="height:600px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("m11n_tank_div")) {                    Plotly.newPlot(                        "m11n_tank_div",                        [{"hovertemplate":"Damage Type=Physical\u003cbr\u003etime=%{x}\u003cbr\u003eTank damage=%{y}\u003cbr\u003eAbility=%{text}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Physical","marker":{"color":"#FFA15A","pattern":{"shape":""}},"name":"Physical","orientation":"v","showlegend":true,"text":["Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Raw Steel","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack","Attack"],"textposition":"auto","x":["2000-01-01T00:00:00.535000","2000-01-01T00:00:03.557000","2000-01-01T00:00:12.757000","2000-01-01T00:00:15.781000","2000-01-01T00:00:18.809000","2000-01-01T00:00:32.064999","2000-01-01T00:00:46.295000","2000-01-01T00:00:49.316000","2000-01-01T00:00:57.365000","2000-01-01T00:01:00.388000","2000-01-01T00:01:03.415000","2000-01-01T00:01:18.678000","2000-01-01T00:01:21.705000","2000-01-01T00:02:13.852000","2000-01-01T00:02:16.876000","2000-01-01T00:02:19.899000","2000-01-01T00:02:43.356000","2000-01-01T00:03:00.464000","2000-01-01T00:03:05.845000","2000-01-01T00:04:14.340000","2000-01-01T00:04:32.710000","2000-01-01T00:04:35.734000","2000-01-01T00:04:38.760000","2000-01-01T00:04:41.782000","2000-01-01T00:04:44.808000","2000-01-01T00:04:47.834000","2000-01-01T00:04:50.861000","2000-01-01T00:04:53.890000","2000-01-01T00:04:56.918000","2000-01-01T00:04:59.949000","2000-01-01T00:05:02.982000","2000-01-01T00:05:06.022000","2000-01-01T00:05:42.938000","2000-01-01T00:05:45.974000","2000-01-01T00:05:49.008000","2000-01-01T00:05:52.046000","2000-01-01T00:06:00.697000","2000-01-01T00:06:03.725000","2000-01-01T00:06:06.750000","2000-01-01T00:06:09.779000","2000-01-01T00:06:12.821000","2000-01-01T00:06:19.877000","2000-01-01T00:06:22.907000","2000-01-01T00:06:25.946000","2000-01-01T00:06:28.980000","2000-01-01T00:06:32.011000","2000-01-01T00:07:00.718000","2000-01-01T00:07:51.280000","2000-01-01T00:07:54.307000","2000-01-01T00:08:02.452000","2000-01-01T00:08:05.475000","2000-01-01T00:08:08.501000","2000-01-01T00:08:11.524000","2000-01-01T00:08:14.550000","2000-01-01T00:08:17.576000","2000-01-01T00:08:28.458000","2000-01-01T00:08:36.526000","2000-01-01T00:08:39.560000","2000-01-01T00:08:42.591000","2000-01-01T00:08:45.623000","2000-01-01T00:08:48.652000","2000-01-01T00:08:51.685000","2000-01-01T00:08:54.711000"],"xaxis":"x","y":{"dtype":"i4","bdata":"EIEAANCJAACtjAAAEIsAAHiKAAA9pAAA66YAAJCiAACgpAAAFKMAAG+gAAB2vwAAjrYAAKa8AACLiwAAV4EAAI+GAADPrQIAXHsAAKmoAAD3nAAAZZ4AAKanAACodwAA6JoAAMSaAADcpQAAh5oAAPGcAADImgAABKMAAPWdAAA4uAAAhcMAAKizAABHvQAA+7sAAATEAACHugAAoL8AAMS6AACivwAA8oMAAKqDAACMigAAQ4UAAPmIAABqhQAAS4MAANeAAABugAAAjoAAAHmIAADwiAAARYUAAG6AAAACiQAA6ocAAHmDAAA0iQAAoYgAAJaNAAC2hAAA"},"yaxis":"y","type":"bar","width":2000},{"hovertemplate":"Damage Type=Magical\u003cbr\u003etime=%{x}\u003cbr\u003eTank damage=%{y}\u003cbr\u003eAbility=%{text}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Magical","marker":{"color":"#636EFA","pattern":{"shape":""}},"name":"Magical","orientation":"v","showlegend":true,"text":["Foregone Fatality","Foregone Fatality","Foregone Fatality"],"textposition":"auto","x":["2000-01-01T00:04:42.761000","2000-01-01T00:05:03.833000","2000-01-01T00:05:03.833000"],"xaxis":"x","y":{"dtype":"i4","bdata":"cL8CAFuPAwDiqAMA"},"yaxis":"y","type":"bar","width":2000}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"time"},"tickformat":"%M:%S"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Tank damage"}},"legend":{"title":{"text":"Damage Type"},"tracegroupgap":0},"title":{"text":"M11N tank damage"},"barmode":"relative","height":600},                        {"responsive": true}                    )                };            </script>        </div>
+        </div>
+    </div>
+
+    </div>
+    <footer>
+        <p>Generated with FFLogs API data</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

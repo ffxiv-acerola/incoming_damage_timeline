@@ -1,0 +1,92 @@
+M9N = {
+    45887: {
+        "damage_category": "party",
+        "is_tank_damage": False,
+        "ability_name": "Crowd Kill",
+        "description": "Raidwide aether succ",
+    },
+    45876: {
+        "damage_category": "party",
+        "is_tank_damage": False,
+        "ability_name": "Sadistic Screech",
+        "description": "Raidwide / arena transition",
+    },
+    45923: {
+        "damage_category": "individual",
+        "is_tank_damage": False,
+        "ability_name": "Flaying Fry",
+        "description": "Puddle spread",
+    },
+    45890: {
+        "damage_category": "party",
+        "is_tank_damage": False,
+        "ability_name": "Finale Fatale",
+        "description": "Raidwide",
+    },
+    45891: {
+        "damage_category": "party",
+        "is_tank_damage": False,
+        "ability_name": "Finale Fatale",
+        "description": "Raidwide",
+    },
+    45893: {
+        "damage_category": "party",
+        "is_tank_damage": False,
+        "ability_name": "Insatiable Thirst",
+        "description": "Raidwide / arena transition",
+    },
+    45896: {
+        "damage_category": "individual",
+        "is_tank_damage": False,
+        "ability_name": "Aetherletting",
+        "description": "X/+ bait, 2x sets",
+    },
+    45897: {
+        "damage_category": "individual",
+        "is_tank_damage": False,
+        "ability_name": "Aetherletting",
+        "description": "X/+ bait, 2x sets",
+    },
+    45920: {
+        "damage_category": "party",
+        "is_tank_damage": False,
+        "ability_name": "Brutal Rain",
+        "description": "Multi-hit party stack",
+    },
+    45921: {
+        "damage_category": "party",
+        "is_tank_damage": False,
+        "ability_name": "Killer Voice",
+        "description": "Raidwide",
+    },
+    45925: {
+        "damage_category": "party",
+        "is_tank_damage": False,
+        "ability_name": "Penetrating Pitch",
+        "description": "Light party stacks",
+    },
+    48038: {
+        "damage_category": "auto",
+        "is_tank_damage": True,
+        "ability_name": "Attack",
+        "description": "Auto",
+    },
+    47047: {
+        "damage_category": "auto",
+        "is_tank_damage": True,
+        "ability_name": "Attack",
+        "description": "Auto",
+    },
+    45915: {
+        "damage_category": "tankbuster",
+        "is_tank_damage": True,
+        "ability_name": "Hardcore",
+        "description": "Tank buster",
+    },
+    45916: {
+        "damage_category": "tankbuster",
+        "is_tank_damage": True,
+        "ability_name": "Hardcore",
+        "description": "Tank buster",
+    },
+}
