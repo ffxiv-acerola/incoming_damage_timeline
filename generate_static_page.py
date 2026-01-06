@@ -13,12 +13,12 @@ FFLOGS_TOKEN = CONFIG["FFLOGS_TOKEN"]
 pl.config.Config.set_tbl_rows(80)
 
 logs = {
-    "M9N": {
+    "m9s": {
         "report_id": "HFK9wckdY1jCMZ27",
         "fight_id": 41,
         "party_damage": fights.M9N,
     },
-    "M10N": {
+    "m10s": {
         "report_id": "r6VFC3gRb4WzaDmw",
         "fight_id": 65,
         "party_damage": fights.M10N,
